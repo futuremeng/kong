@@ -26,8 +26,8 @@ networks:
 services:
   kong-migrations:
     image: "${KONG_DOCKER_TAG:-kong:latest}"
+    container_name: kong-migrations
     command: kong migrations bootstrap
-    profiles: [ "database" ]
     depends_on:
       - db
     environment:
@@ -40,8 +40,8 @@ services:
 
   kong-migrations-up:
     image: "${KONG_DOCKER_TAG:-kong:latest}"
+    container_name: kong-migrations-up
     command: kong migrations up && kong migrations finish
-    profiles: [ "database" ]
     depends_on:
       - db
     environment:
