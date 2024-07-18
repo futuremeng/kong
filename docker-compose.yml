@@ -2,7 +2,7 @@ version: '3.9'
 
 x-kong-config:
   &kong-env
-  KONG_DATABASE: ${KONG_DATABASE:-off}
+  KONG_DATABASE: ${KONG_DATABASE:-postgres}
   KONG_PG_DATABASE: ${KONG_PG_DATABASE:-kong}
   KONG_PG_HOST: db
   KONG_PG_USER: ${KONG_PG_USER:-kong}
@@ -56,6 +56,8 @@ services:
     image: "${KONG_DOCKER_TAG:-kong:latest}"
     container_name: kong-gateway
     user: "${KONG_USER:-kong}"
+    depends_on:
+      - db
     environment:
       <<: *kong-env
       KONG_ADMIN_ACCESS_LOG: /dev/stdout
@@ -101,7 +103,6 @@ services:
   db:
     image: postgres:9.5
     container_name: kong-database
-    profiles: [ "database" ]
     environment:
       POSTGRES_DB: ${KONG_PG_DATABASE:-kong}
       POSTGRES_USER: ${KONG_PG_USER:-kong}
