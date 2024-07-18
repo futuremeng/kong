@@ -27,6 +27,7 @@ services:
   kong-migrations:
     image: "${KONG_DOCKER_TAG:-kong:latest}"
     container_name: kong-migrations
+    profiles: [ "init" ]
     command: kong migrations bootstrap
     depends_on:
       - db
@@ -41,6 +42,7 @@ services:
   kong-migrations-up:
     image: "${KONG_DOCKER_TAG:-kong:latest}"
     container_name: kong-migrations-up
+    profiles: [ "init" ]
     command: kong migrations up && kong migrations finish
     depends_on:
       - db
@@ -129,6 +131,40 @@ services:
       - kong-net
     volumes:
       - kong_data:/var/lib/postgresql/data
+
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: kong-prometheus
+    hostname: prometheus
+    ports:
+      - "${PROMETHEUS_HTTP_PORT:-9090}:9090"
+    volumes:
+      - ${PROMETHEUS_CONF_FILE:-./config/prometheus.yml}:/etc/prometheus/prometheus.yml
+    restart: always
+    networks:
+      - kong-net
+
+
+  grafana:
+    image: grafana/grafana:latest
+    container_name: kong-grafana
+    hostname: grafana
+    ports:
+      - "${GRAFAMA_HTTP_PORT:-3010}:3000"
+    volumes:
+      - ${GRAFAMA_CONF_FILE:-./config/grafana.ini}:/etc/grafana/grafana.ini
+    restart: always
+    networks:
+      - kong-net
+
+  node-exporter:
+    image: prom/node-exporter:latest
+    container_name: kong-node-exporter
+    ports:
+      - "${NODE_EXPORTER_HTTP_PORT:-9100}:9100"
+    restart: always
+    networks:
+      - kong-net
 
 secrets:
   kong_postgres_password:
