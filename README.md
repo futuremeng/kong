@@ -2,7 +2,7 @@
  * @Author: be_loving@163.com 
  * @Date: 2024-07-18 15:53:52
  * @LastEditors: be_loving@163.com 
- * @LastEditTime: 2024-07-18 17:31:38
+ * @LastEditTime: 2024-07-19 09:56:10
  * @FilePath: /kong/README.md
  * @Description: 
  * 
@@ -68,6 +68,10 @@ with your own environment variables or datastore configuration.
 
 default user:admin
 default password:admin
+
+add dashboard:
+1. import dashboard id: 16098 for server status
+2. import dashboard id: 7424 for kong
 
 ## Issues
 
