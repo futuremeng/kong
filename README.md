@@ -2,7 +2,7 @@
  * @Author: be_loving@163.com 
  * @Date: 2024-07-18 15:53:52
  * @LastEditors: be_loving@163.com 
- * @LastEditTime: 2024-07-19 09:56:10
+ * @LastEditTime: 2024-07-22 11:11:09
  * @FilePath: /kong/README.md
  * @Description: 
  * 
@@ -27,7 +27,7 @@ Gateway distinguished for its high performance and extensibility via plugins.
 ## How to use this Compose file
 
 ```shell
-$ docker compose --profile init up -d
+$ docker compose --profile init up
 ```
 
 This command will result in a single Kong Docker container:
@@ -41,7 +41,7 @@ kong-migrations     kong:latest         "/docker-entrypoint.…"   migrations   
 kong-migrations-up   kong:latest         "/docker-entrypoint.…"   migrations-up       About a minute ago   Up About a minute (exited)
 ```
 
-You can delete the `kong-migrations` and `kong-migrations-up` containers after init complete.
+You can delete the containers `kong-migrations` and `kong-migrations-up` after init completed.
 
 
 If you change some config you can run:
